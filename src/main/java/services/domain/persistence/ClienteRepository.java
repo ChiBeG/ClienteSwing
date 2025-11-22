@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ClienteRepository extends Repository<Cliente> {
+public class ClienteRepository implements IRepository<Cliente> {
 
     private final IClienteDAO dao = DAOFactory.create(DAOType.CLIENTE);
 

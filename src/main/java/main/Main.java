@@ -16,7 +16,7 @@ import java.io.File;
 
 public class Main {
 
-    private static final String DB_PATH = "../../locadora.db";
+    private static final String DB_PATH = "locadora.db";
 
 	public static void main(String[] args) {
         // Verifica se o arquivo SQLite existe

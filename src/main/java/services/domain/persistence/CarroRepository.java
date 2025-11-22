@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CarroRepository extends Repository<Carro> {
+public class CarroRepository implements IRepository<Carro> {
 
     private final ICarroDAO dao = DAOFactory.create(DAOType.CARRO);
 
