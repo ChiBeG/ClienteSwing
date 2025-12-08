@@ -5,9 +5,16 @@ import model.ClienteBuilder;
 
 public class ClienteRepository extends Repository<Cliente, ClienteDTO> {
 
+    private final IClienteDAO dao = DAOFactory.create(DAOType.CLIENTE);
+
+    public Cliente findByCPF(Long cpf) {
+        var dto = dao.findByCPF(cpf);
+        return dto == null ? null : ClienteBuilder.buildFromDTO(dto);
+    }
+    
     @Override
     protected IDAO<ClienteDTO> getDAO() {
-        return DAOFactory.create(DAOType.CLIENTE);
+        return dao;
     }
 
     @Override
@@ -18,11 +25,5 @@ public class ClienteRepository extends Repository<Cliente, ClienteDTO> {
     @Override
     protected Cliente toEntity(ClienteDTO dto) {
         return ClienteBuilder.buildFromDTO(dto);
-    }
-
-    public Cliente findByCPF(Long cpf) {
-        var dao = getDAO();
-        var dto = dao.findByCPF(cpf);
-        return dto == null ? null : toEntity(dto);
     }
 }

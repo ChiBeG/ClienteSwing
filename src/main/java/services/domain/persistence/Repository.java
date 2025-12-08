@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Repository<T extends Entity, D extends EntityDTO> implements IRepository<T> {
+public abstract class Repository<E extends Entity, D extends EntityDTO> implements IRepository<E> {
 
     protected abstract IDAO<D> getDAO();
 
-    protected abstract D toDTO(T entity);
+    protected abstract D toDTO(E entity);
 
-    protected abstract T toEntity(D dto);
+    protected abstract E toEntity(D dto);
+
+    
 
     @Override
-    public void add(T entity) {
+    public void add(E entity) {
         if (entity.getId() == null) {
-            // Gera ID do objeto para inseri-lo no BD
             entity.setId(UUID.randomUUID());
             getDAO().insert(toDTO(entity));
         }
@@ -25,7 +26,7 @@ public abstract class Repository<T extends Entity, D extends EntityDTO> implemen
     }
 
     @Override
-    public void remove(T entity) {
+    public void remove(E entity) {
         if (entity.getId() != null) {
             getDAO().delete(toDTO(entity));
             entity.setId(null);
@@ -33,12 +34,11 @@ public abstract class Repository<T extends Entity, D extends EntityDTO> implemen
     }
 
     @Override
-    public List<T> findAll() {
-        List<T> entidades = new ArrayList<>();
+    public List<E> findAll() {
+        List<E> entidades = new ArrayList<>();
         for (var dto : getDAO().findAll()) {
             entidades.add(toEntity(dto));
         }
-
         return entidades;
     }
 }
